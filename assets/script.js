@@ -140,7 +140,7 @@ function formatTime(time, string=true) {
     var s = Math.floor(d % 3600 % 60);
     
     if (string) {
-        return `${zeroPad(h)}:${zeroPad(m)}:${zeroPad(s)}`;
+        return `${zeroPad(h, 2)}:${zeroPad(m, 2)}:${zeroPad(s, 2)}`;
     } else {
         return { h, m, s }
     }
