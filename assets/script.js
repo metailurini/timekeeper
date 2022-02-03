@@ -57,7 +57,18 @@ function run() {
 function timeFromQuery() {
   const urlSearchParams = new URLSearchParams(window.location.search);
   const { second } = Object.fromEntries(urlSearchParams.entries());
-  return second ? parseInt(second) : null;
+
+  if (second) {
+    if (second.match(/^[\d\.\+\-%\*()\/]+$/)) {
+      try {
+        return eval(second);
+      }
+      catch(err) {
+        console.error(`Error => ${err}`);
+      }
+    }
+  }
+  return null;
 }
 
 async function savedTime(time=null) {

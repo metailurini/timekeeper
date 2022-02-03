@@ -8,6 +8,7 @@
    Exp:
    ```
    https://metailurini.github.io/timekeeper?second=1500
+   https://metailurini.github.io/timekeeper?second=25*60
    ```
 
 ### 2. Pause
