@@ -9,6 +9,8 @@ let WARNING_THRESHOLD;
 let ALERT_THRESHOLD;
 let COLOR_CODES;
 
+main();
+
 const setRemainingPathColor = async (timeLeft) => {
     const {alert, warning, info} = COLOR_CODES;
     if (timeLeft <= alert.threshold) {
@@ -22,10 +24,12 @@ const setRemainingPathColor = async (timeLeft) => {
 
 const setCircleDasharray = async () => {
     const circleDasharray = `${(calculateTimeFraction() * FULL_DASH_ARRAY).toFixed(0)} 283`;
-    document.getElementById("base-timer-path-remaining").setAttribute("stroke-dasharray", circleDasharray);
+    document
+      .getElementById("base-timer-path-remaining")
+      .setAttribute("stroke-dasharray", circleDasharray);
 }
 
-async function init() {
+async function main() {
   FULL_DASH_ARRAY = 283;
   WARNING_THRESHOLD = 10;
   ALERT_THRESHOLD = 5;
@@ -39,12 +43,15 @@ async function init() {
   timeLeft = TIME_LIMIT;
   timerInterval = null;
   remainingPathColor = COLOR_CODES.info.color;
+
   defineApp();
   run();
 }
 
 function run() {
-  document.querySelector("#base-timer-label").onclick = startTimer;
+  document
+    .querySelector("#base-timer-label")
+    .onclick = startTimer;
 }
 
 function timeFromQuery() {
@@ -61,10 +68,14 @@ async function savedTime(time=null) {
   let { h, m, s } = time ? 
     formatTime(time, false) :
     {
-      h: parseInt(localStorage.getItem(hKey) || 0),
-      m: parseInt(localStorage.getItem(mKey) || 25),
-      s: parseInt(localStorage.getItem(sKey) || 0) 
+      h: parseInt(localStorage.getItem(hKey)),
+      m: parseInt(localStorage.getItem(mKey)),
+      s: parseInt(localStorage.getItem(sKey)) 
     };
+
+  h = h > 0 ? h : 0;
+  m = m > 0 ? m : 25;
+  s = s > 0 ? s : 0;
 
   localStorage.setItem(hKey, h);
   localStorage.setItem(mKey, m);
@@ -97,8 +108,6 @@ function defineApp() {
   `;
 }
 
-init();
-
 function onTimesUp() {
   clearInterval(timerInterval);
   document.querySelector("body > audio").play();
@@ -129,13 +138,9 @@ function formatTime(time, string=true) {
     var h = Math.floor(d / 3600);
     var m = Math.floor(d % 3600 / 60);
     var s = Math.floor(d % 3600 % 60);
-
-    var hDisplay = h > 0 ? zeroPad(h, 2) : "00";
-    var mDisplay = m > 0 ? zeroPad(m, 2) : "00";
-    var sDisplay = s > 0 ? zeroPad(s, 2) : "00";
     
     if (string) {
-        return `${hDisplay}:${mDisplay}:${sDisplay}`;
+        return `${zeroPad(h)}:${zeroPad(m)}:${zeroPad(s)}`;
     } else {
         return { h, m, s }
     }
