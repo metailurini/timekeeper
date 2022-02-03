@@ -40,7 +40,7 @@ async function init() {
   timerInterval = null;
   remainingPathColor = COLOR_CODES.info.color;
   defineApp();
-  ;
+  run();
 }
 
 function run() {
@@ -98,7 +98,6 @@ function defineApp() {
 }
 
 init();
-run();
 
 function onTimesUp() {
   clearInterval(timerInterval);
